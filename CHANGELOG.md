@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased] - 2022-?-?
 ### added
-Week 8 Update
-Cutsences
-new modding stuff
-windows build
+- Week 8 Update
+- Cutsences
+- new modding stuff
+- windows build
 ### Changed
 nothing
 
