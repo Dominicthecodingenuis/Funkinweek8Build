@@ -44,7 +44,7 @@ class StoryMenuState extends MusicBeatState
 		['mom', 'bf', 'gf'],
 		['parents-christmas', 'bf', 'gf'],
 		['senpai', 'bf', 'gf'],
-		['dad', 'bf', 'gf']
+		['dad','bf','gf']
 	];
 
 	var weekNames:Array<String> = [
@@ -293,8 +293,6 @@ class StoryMenuState extends MusicBeatState
 	var movedBack:Bool = false;
 	var selectedWeek:Bool = false;
 	var stopspamming:Bool = false;
-	var isCutscene:Bool = false;
-
 
 	function selectWeek()
 	{
@@ -324,41 +322,14 @@ class StoryMenuState extends MusicBeatState
 			}
 
 			PlayState.storyDifficulty = curDifficulty;
+
 			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
 			PlayState.storyWeek = curWeek;
-			var video:MP4Handler = new MP4Handler();
-
-if (curWeek == 0 && !isCutscene) // Checks if the current week is Tutorial.
-{
-    video.playMP4(Paths.video('gfsus'), new PlayState()); 
-    isCutscene = true;
-}
-else
-{
-    new FlxTimer().start(1, function(tmr:FlxTimer)
-    {
-        if (isCutscene)
-
-        LoadingState.loadAndSwitchState(new PlayState(), true);
-    });
-	var video:MP4Handler = new MP4Handler();
-
-if (curWeek == 7 && !isCutscene) // Checks if the current week is Tutorial.
-{
-    video.playMP4(Paths.video('UghCutsence'), new PlayState()); 
-    isCutscene = true;
-}
-else
-{
-    new FlxTimer().start(1, function(tmr:FlxTimer)
-    {
-        if (isCutscene)
-         
-
-        LoadingState.loadAndSwitchState(new PlayState(), true);
-    });
-}
-}
+			PlayState.campaignScore = 0;
+			new FlxTimer().start(1, function(tmr:FlxTimer)
+			{
+				LoadingState.loadAndSwitchState(new PlayState(), true);
+			});
 		}
 	}
 
