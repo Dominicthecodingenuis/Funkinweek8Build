@@ -17,21 +17,16 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var pauseOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
 	var difficultyChoices:Array<String> = ['EASY', 'NORMAL', 'HARD', 'BACK'];
-
-	var menuItems:Array<String> = [];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
 
 	var practiceText:FlxText;
-
 	public function new(x:Float, y:Float)
 	{
 		super();
-
-		menuItems = pauseOG;
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -93,23 +88,22 @@ class PauseSubState extends MusicBeatSubstate
 	}
 
 	private function regenMenu()
-	{
-		while (grpMenuShit.members.length > 0)
 		{
-			grpMenuShit.remove(grpMenuShit.members[0], true);
-		}
-
-		for (i in 0...menuItems.length)
-		{
-			var menuItem:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
-			menuItem.isMenuItem = true;
-			menuItem.targetY = i;
-			grpMenuShit.add(menuItem);
-		}
-
-		curSelected = 0;
-
+			while (grpMenuShit.members.length > 0)
+			{
+				grpMenuShit.remove(grpMenuShit.members[0], true);
+			}
+	
+			for (i in 0...menuItems.length)
+			{
+				var menuItem:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+				menuItem.isMenuItem = true;
+				menuItem.targetY = i;
+				grpMenuShit.add(menuItem);
+			}
 		changeSelection();
+
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
 	override function update(elapsed:Float)
@@ -160,7 +154,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.storyDifficulty = curSelected;
 					FlxG.resetState();
 				case "BACK":
-					menuItems = pauseOG;
 					regenMenu();
 			}
 		}
@@ -181,7 +174,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0):Void
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		curSelected += change;
 
 		if (curSelected < 0)
