@@ -35,6 +35,7 @@ class OptionsMenu extends MusicBeatState
 		/* 
 			grpControls = new FlxTypedGroup<Alphabet>();
 			add(grpControls);
+
 			for (i in 0...controlsStrings.length)
 			{
 				if (controlsStrings[i].indexOf('set') != -1)
@@ -57,15 +58,12 @@ class OptionsMenu extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if(controls.BACK)
-		{
-			FlxG.switchState(new MainMenuState());	
-		}
 		/* 
 			if (controls.ACCEPT)
 			{
 				changeBinding();
 			}
+
 			if (isSettingControl)
 				waitingInput();
 			else
@@ -101,10 +99,6 @@ class OptionsMenu extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		NGio.logEvent('Fresh');
-		#end
-
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;

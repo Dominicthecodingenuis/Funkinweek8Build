@@ -52,6 +52,9 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+	public static var practiceMode:Bool = false;
+	public static var deathCounter:Int = 0;
+	
 
 	var halloweenLevel:Bool = false;
 
@@ -1667,7 +1670,7 @@ class PlayState extends MusicBeatState
 			trace("User is cheating!");
 		}
 
-		if (health <= 0)
+		if (health <= 0  && !practiceMode) 
 		{
 			boyfriend.stunned = true;
 
@@ -1677,6 +1680,8 @@ class PlayState extends MusicBeatState
 
 			vocals.stop();
 			FlxG.sound.music.stop();
+
+			deathCounter += 1;
 
 			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -1796,6 +1801,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		deathCounter = 0;
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -1909,7 +1915,7 @@ class PlayState extends MusicBeatState
 			daRating = 'good';
 			score = 200;
 		}
-
+		if (!practiceMode)
 		songScore += score;
 
 		/* if (combo > 60)
@@ -2234,7 +2240,8 @@ class PlayState extends MusicBeatState
 				gf.playAnim('sad');
 			}
 			combo = 0;
-
+            
+			if (!practiceMode)
 			songScore -= 10;
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
