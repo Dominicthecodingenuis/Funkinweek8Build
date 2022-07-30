@@ -3,9 +3,6 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-#if VIDEOS
-import vlc.VideoHandler;
-#end
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -615,6 +612,8 @@ class PlayState extends MusicBeatState
 									  
 									  var tankdude3:BGSprite = new BGSprite('tank3', 1300, 1200, 3.5, 2.5, ['fg']);
 									  foregroundSprites.add(tankdude3);
+                                    
+										
 		          }
 		          default:
 		          {
@@ -643,7 +642,16 @@ class PlayState extends MusicBeatState
 
 		                  add(stageCurtains);
 
-
+						}
+						case 'darnell' | 'lit-up' | 'hot':
+						{
+								defaultCamZoom = 0.9;
+								curStage = 'darnell';
+								var bg:FlxSprite = new FlxSprite(-1300, -1048).loadGraphic(Paths.image('alley'));
+								bg.antialiasing = true;
+								bg.scrollFactor.set(0.9, 0.9);
+								bg.active = false;
+								add(bg);
 		          }
               }
 
@@ -659,6 +667,8 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-pixel';
 			case 'schoolEvil':
 				gfVersion = 'gf-pixel';
+			case 'darnell':
+				gfVersion = 'nene';
 		}
 
 		if (curStage == 'limo')
@@ -754,6 +764,13 @@ class PlayState extends MusicBeatState
 			boyfriend.y += 0;
 				   dad.y += 60;
 				dad.x -= 80;
+			case 'darnell':
+				dad.y += 550;
+				dad.x -= 50;
+				gf.x -= 25;
+                gf.y += 420;
+				boyfriend.y += 300;
+
 		}
 
 		add(gf);
@@ -888,41 +905,8 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
-					
-					#if VIDEOS	
-				case 'ugh':
-					playCutscene('UghCutsence.mp4');
-				#end	
 				default:
 					startCountdown();
-		
-	var video:VideoHandler;
-
-	function playCutscene(name:String, ?atend:Bool)
-	{
-		inCutscene = true;
-
-		var diff:String = ["-easy", "", "-hard"][storyDifficulty];
-
-		var video:VideoHandler = new VideoHandler();
-		FlxG.sound.music.stop();
-		video.finishCallback = function()
-		{
-			if (atend == true)
-			{
-				if (storyPlaylist.length <= 0)
-					MusicBeatState.switchState(new StoryMenuState());
-				else
-				{
-					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase(), diff);
-					LoadingState.loadAndSwitchState(new PlayState());
-				}
-			}
-			else
-				startCountdown();
-		}
-		video.playVideo(Paths.video(name));
-	}
 
 			}
 		}

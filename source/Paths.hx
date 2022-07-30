@@ -16,7 +16,7 @@ class Paths
 		currentLevel = name.toLowerCase();
 	}
 
-	static function getPath(file:String, type:AssetType, library:Null<String>)
+	static public function getPath(file:String, type:AssetType, library:Null<String>)
 	{
 		if (library != null)
 			return getLibraryPath(file, library);
@@ -79,12 +79,6 @@ class Paths
 	{
 		return sound(key + FlxG.random.int(min, max), library);
 	}
-	inline static public function video(key:String, ?library:String)
-		{
-			trace('assets/videos/$key.mp4');
-			return getPath('videos/$key.mp4', BINARY, library);
-		}
-		
 
 	inline static public function music(key:String, ?library:String)
 	{
@@ -109,6 +103,11 @@ class Paths
 	inline static public function font(key:String)
 	{
 		return 'assets/fonts/$key';
+	}
+
+	inline static public function video(key:String, ?library:String)
+	{
+		return getPath('music/$key.mp4', TEXT, library);
 	}
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)
