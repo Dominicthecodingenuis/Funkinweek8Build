@@ -8,3 +8,4 @@ jobs:
       - run: |
           haxe -version
           haxelib install hxnodejs
+          on
