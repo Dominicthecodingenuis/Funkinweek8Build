@@ -39,7 +39,6 @@
 	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
 
 	<classpath name="source" />
-    	<assets path="assets/preload/videos" rename="assets/videos" include="*mp4" embed='false' />
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web"/>
@@ -180,7 +179,6 @@
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
 	<haxedef name="NG_LOGIN" if="newgrounds" />
-	  <haxedef name="VIDEOS" if="windows" />
 
 	
 </project>

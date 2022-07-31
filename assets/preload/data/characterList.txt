@@ -16,5 +16,6 @@ senpai
 senpai-angry
 spirit
 tankman
-darnell
+Darnell
 nene
+gfTankmen

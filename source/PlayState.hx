@@ -667,6 +667,8 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-pixel';
 			case 'schoolEvil':
 				gfVersion = 'gf-pixel';
+			case 'tank':
+            gfVersion = 'gfTankmen';
 			case 'darnell':
 				gfVersion = 'nene';
 		}
@@ -765,11 +767,12 @@ class PlayState extends MusicBeatState
 				   dad.y += 60;
 				dad.x -= 80;
 			case 'darnell':
-				dad.y += 550;
+				dad.y += 645;
 				dad.x -= 50;
 				gf.x -= 25;
                 gf.y += 420;
 				boyfriend.y += 300;
+				boyfriend.x -= 25;
 
 		}
 
