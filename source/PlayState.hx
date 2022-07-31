@@ -41,6 +41,7 @@ import lime.utils.Assets;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
+import ui.PreferencesMenu;
 
 using StringTools;
 
@@ -54,6 +55,9 @@ class PlayState extends MusicBeatState
 	public static var storyDifficulty:Int = 1;
 	public static var deathCounter:Int = 0;
 	public static var practiceMode:Bool = false;
+	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
+	private var strumLine:FlxSprite;
+
 
 	var halloweenLevel:Bool = false;
 
@@ -66,14 +70,12 @@ class PlayState extends MusicBeatState
 	private var notes:FlxTypedGroup<Note>;
 	private var unspawnNotes:Array<Note> = [];
 
-	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
 
 	private var camFollow:FlxObject;
 
 	private static var prevCamFollow:FlxObject;
 
-	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
 
 	private var camZooming:Bool = false;
@@ -110,6 +112,7 @@ class PlayState extends MusicBeatState
 	var upperBoppers:FlxSprite;
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
+
 
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
@@ -791,6 +794,17 @@ class PlayState extends MusicBeatState
 		doof.scrollFactor.set();
 		doof.finishThing = startCountdown;
 
+		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
+		
+	
+		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
+		if (PreferencesMenu.getPref('downscroll'))
+			strumLine.y = FlxG.height - 150;
+		strumLine.scrollFactor.set();
+
+		strumLineNotes = new FlxTypedGroup<FlxSprite>();
+		add(strumLineNotes);
+
 		Conductor.songPosition = -5000;
 
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
@@ -832,6 +846,9 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
+
+		if (PreferencesMenu.getPref('downscroll'))
+			healthBarBG.y = FlxG.height * 0.1;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
@@ -1675,20 +1692,16 @@ class PlayState extends MusicBeatState
 			trace("RESET = True");
 		}
 
-		// CHEAT = brandon's a pussy
-		if (controls.CHEAT)
-		{
-			health += 1;
-			trace("User is cheating!");
-		}
 
-		if (health <= 0)
+		if (health <= 0 && !practiceMode)
 		{
 			boyfriend.stunned = true;
 
 			persistentUpdate = false;
 			persistentDraw = false;
 			paused = true;
+
+			deathCounter += 1;
 
 			vocals.stop();
 			FlxG.sound.music.stop();
@@ -1730,8 +1743,47 @@ class PlayState extends MusicBeatState
 					daNote.active = true;
 				}
 
-				daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+				var center = strumLine.y + (Note.swagWidth / 2);
+				
+				// i am so fucking sorry for these if conditions
+				if (PreferencesMenu.getPref('downscroll'))
+				{
+					daNote.y = strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2);
+					
+					if (daNote.isSustainNote)
+					{
+						if (daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null)
+							daNote.y += daNote.prevNote.height;
+						else
+							daNote.y += daNote.height / 2;
 
+						if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= center
+							&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+						{
+							var swagRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
+							swagRect.height = (center - daNote.y) / daNote.scale.y;
+							swagRect.y = daNote.frameHeight - swagRect.height;
+							
+							daNote.clipRect = swagRect;
+						}
+					}
+				}
+				else
+				{
+					daNote.y = strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2);
+	
+					if (daNote.isSustainNote
+						&& daNote.y + daNote.offset.y * daNote.scale.y <= center
+						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+					{
+						var swagRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
+						swagRect.y = (center - daNote.y) / daNote.scale.y;
+						swagRect.height -= swagRect.y;
+
+						daNote.clipRect = swagRect;
+					}
+				}
+      
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote
 					&& daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2
@@ -1781,6 +1833,12 @@ class PlayState extends MusicBeatState
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
+				var doKill = daNote.y < -daNote.height;
+
+				if (PreferencesMenu.getPref('downscroll'))
+					doKill = daNote.y > FlxG.height;
+
+
 
 				if (daNote.y < -daNote.height)
 				{
@@ -1811,6 +1869,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
+		deathCounter = 0;
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -1935,6 +1994,9 @@ class PlayState extends MusicBeatState
 				daRating = 'bad';
 		 */
 
+		 if (!practiceMode)
+			songScore += score;
+
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
@@ -2048,20 +2110,20 @@ class PlayState extends MusicBeatState
 	private function keyShit():Void
 	{
 		// HOLDING
-		var up = controls.UP;
-		var right = controls.RIGHT;
-		var down = controls.DOWN;
-		var left = controls.LEFT;
+		var up = controls.UI_UP;
+		var right = controls.UI_RIGHT;
+		var down = controls.UI_DOWN;
+		var left = controls.UI_LEFT;
 
-		var upP = controls.UP_P;
-		var rightP = controls.RIGHT_P;
-		var downP = controls.DOWN_P;
-		var leftP = controls.LEFT_P;
+		var upP = controls.UI_UP_P;
+		var rightP = controls.UI_RIGHT_P;
+		var downP = controls.UI_DOWN_P;
+		var leftP = controls.UI_LEFT_P;
 
-		var upR = controls.UP_R;
-		var rightR = controls.RIGHT_R;
-		var downR = controls.DOWN_R;
-		var leftR = controls.LEFT_R;
+		var upR = controls.UI_UP_R;
+		var rightR = controls.UI_RIGHT_R;
+		var downR = controls.UI_DOWN_R;
+		var leftR = controls.UI_LEFT_R;
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
 
@@ -2282,10 +2344,10 @@ class PlayState extends MusicBeatState
 	{
 		// just double pasting this shit cuz fuk u
 		// REDO THIS SYSTEM!
-		var upP = controls.UP_P;
-		var rightP = controls.RIGHT_P;
-		var downP = controls.DOWN_P;
-		var leftP = controls.LEFT_P;
+		var upP = controls.UI_UP_P;
+		var rightP = controls.UI_RIGHT_P;
+		var downP = controls.UI_DOWN_P;
+		var leftP = controls.UI_LEFT_P;
 
 		if (leftP)
 			noteMiss(0);
@@ -2501,6 +2563,24 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
+		}
+
+		wiggleShit.update(Conductor.crochet);
+
+		if (PreferencesMenu.getPref('camera-zoom'))
+		{
+			// HARDCODING FOR MILF ZOOMS!
+			if (curSong.toLowerCase() == 'milf' && curBeat >= 168 && curBeat < 200 && camZooming && FlxG.camera.zoom < 1.35)
+			{
+				FlxG.camera.zoom += 0.015;
+				camHUD.zoom += 0.03;
+			}
+	
+			if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0)
+			{
+				FlxG.camera.zoom += 0.015;
+				camHUD.zoom += 0.03;
+			}
 		}
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));

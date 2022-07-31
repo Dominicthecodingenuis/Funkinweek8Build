@@ -1,7 +1,7 @@
 {
 	"song": {
-		"player1": "bf",
-		"player2": "dad",
+		"player1": "pico-player",
+		"player2": "darnell",
 		"notes": [
 			{
 				"lengthInSteps": 16,

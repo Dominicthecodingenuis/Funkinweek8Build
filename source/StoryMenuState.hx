@@ -30,8 +30,8 @@ class StoryMenuState extends MusicBeatState
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
-		['ugh', 'guns', 'stress'],
-		['darnell', 'lit-up', 'hot']
+		['Ugh', 'Guns', 'Stress'],
+		['darnell','lit-up', '2hot']
 	];
 	var curDifficulty:Int = 1;
 
@@ -45,21 +45,11 @@ class StoryMenuState extends MusicBeatState
 		['mom', 'bf', 'gf'],
 		['parents-christmas', 'bf', 'gf'],
 		['senpai', 'bf', 'gf'],
-		['dad','bf','gf'],
-		['darnell', 'bf', 'gf']
+		['tankman', 'bf', 'gf'],
+		['dad', 'pico', 'gf']
 	];
 
-	var weekNames:Array<String> = [
-		"",
-		"Daddy Dearest",
-		"Spooky Month",
-		"PICO",
-		"MOMMY MUST MURDER",
-		"RED SNOW",
-		"hating simulator ft. moawling",
-		"tankman",
-		"Pico's school ft. ivanAlmighty"
-	];
+	var weekNames:Array<String> = ";Daddy Dearest;Spooky Month;PICO;MOMMY MUST MURDER;RED SNOW;hating simulator ft. moawling;TANKMAN;Pico's school 3 ft. ivanAlmighty".split(";");
 
 	var txtWeekTitle:FlxText;
 
@@ -157,22 +147,21 @@ class StoryMenuState extends MusicBeatState
 			weekCharacterThing.antialiasing = true;
 			switch (weekCharacterThing.character)
 			{
-				case 'dad':
-					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.5));
-					weekCharacterThing.updateHitbox();
-
 				case 'bf':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 					weekCharacterThing.updateHitbox();
 					weekCharacterThing.x -= 80;
+				case 'dad':
+					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.5));
+					weekCharacterThing.updateHitbox();
 				case 'gf':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.5));
 					weekCharacterThing.updateHitbox();
-				case 'pico':
-					weekCharacterThing.flipX = true;
 				case 'parents-christmas':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 					weekCharacterThing.updateHitbox();
+				case 'pico':
+					weekCharacterThing.flipX = true;
 			}
 
 			grpWeekCharacters.add(weekCharacterThing);
@@ -231,9 +220,9 @@ class StoryMenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		// scoreText.setFormat('VCR OSD Mono', 32);
-		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5));
+		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.5);
 
-		scoreText.text = "WEEK SCORE:" + lerpScore;
+		scoreText.text = "WEEK SCORE:" + Math.round(lerpScore);
 
 		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
 		txtWeekTitle.x = FlxG.width - (txtWeekTitle.width + 10);
@@ -251,29 +240,29 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (!selectedWeek)
 			{
-				if (controls.UP_P)
+				if (controls.UI_UP_P)
 				{
 					changeWeek(-1);
 				}
 
-				if (controls.DOWN_P)
+				if (controls.UI_DOWN_P)
 				{
 					changeWeek(1);
 				}
 
-				if (controls.RIGHT)
+				if (controls.UI_RIGHT)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.LEFT)
+				if (controls.UI_LEFT)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.UI_RIGHT_P)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+				if (controls.UI_LEFT_P)
 					changeDifficulty(-1);
 			}
 
@@ -364,7 +353,6 @@ class StoryMenuState extends MusicBeatState
 
 		// USING THESE WEIRD VALUES SO THAT IT DOESNT FLOAT UP
 		sprDifficulty.y = leftArrow.y - 15;
-		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 
 		#if !switch
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
@@ -373,7 +361,7 @@ class StoryMenuState extends MusicBeatState
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
 	}
 
-	var lerpScore:Int = 0;
+	var lerpScore:Float = 0;
 	var intendedScore:Int = 0;
 
 	function changeWeek(change:Int = 0):Void
@@ -390,7 +378,7 @@ class StoryMenuState extends MusicBeatState
 		for (item in grpWeekText.members)
 		{
 			item.targetY = bullShit - curWeek;
-			if (item.targetY == Std.int(0) && weekUnlocked[curWeek])
+			if (item.targetY == 0 && weekUnlocked[curWeek])
 				item.alpha = 1;
 			else
 				item.alpha = 0.6;
@@ -411,6 +399,14 @@ class StoryMenuState extends MusicBeatState
 
 		switch (grpWeekCharacters.members[0].animation.curAnim.name)
 		{
+			case 'dad':
+				grpWeekCharacters.members[0].offset.set(120, 200);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+
+			case 'mom':
+				grpWeekCharacters.members[0].offset.set(100, 200);
+				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
+
 			case 'parents-christmas':
 				grpWeekCharacters.members[0].offset.set(200, 200);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 0.99));
@@ -419,12 +415,8 @@ class StoryMenuState extends MusicBeatState
 				grpWeekCharacters.members[0].offset.set(130, 0);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1.4));
 
-			case 'mom':
-				grpWeekCharacters.members[0].offset.set(100, 200);
-				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
-
-			case 'dad':
-				grpWeekCharacters.members[0].offset.set(120, 200);
+			case 'tankman':
+				grpWeekCharacters.members[0].offset.set(60, -20);
 				grpWeekCharacters.members[0].setGraphicSize(Std.int(grpWeekCharacters.members[0].width * 1));
 
 			default:
