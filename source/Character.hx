@@ -538,14 +538,14 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'Pico Down Note MISS', 24);
 
 				addOffset('idle');
-				addOffset("singUP", 21, 27);
-				addOffset("singRIGHT", -48, 2);
-				addOffset("singLEFT", 85, -10);
-				addOffset("singDOWN", 84, -80);
-				addOffset("singUPmiss", 28, 67);
-				addOffset("singRIGHTmiss", -45, 50);
-				addOffset("singLEFTmiss", 83, 28);
-				addOffset("singDOWNmiss", 80, -38);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", 65, 7);
+				addOffset("singLEFT", 65, 9);
+				addOffset("singDOWN", 190, -70);
+				addOffset("singUPmiss", -19, 67);
+				addOffset("singRIGHTmiss", 60, 41);
+				addOffset("singLEFTmiss", 62, 64);
+				addOffset("singDOWNmiss", 210, -28);
 
 				playAnim('idle');
 
@@ -564,14 +564,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Tankman Note Left ', 24, false);
 				animation.addByPrefix('ughAnim', 'TANKMAN UGH', 24, false);
 
-				addOffset("idle", 0, 0);
-				addOffset("singUP", 24, 56);
-				addOffset("oldSingUP", 24, 56);
-				addOffset("singRIGHT", -1, -7);
-				addOffset("singLEFT", 100, -14);
-				addOffset("singDOWN", 98, -90);
-				addOffset("ughAnim", 0, 0);
-				addOffset("singDOWN-alt", 8, 14);
+			addOffset("idle", 3, 0);
+            addOffset("singUP", 21, 27);
+            addOffset("singRIGHT", -48, 2);
+           addOffset("singLEFT", 85, -10);
+          addOffset("singDOWN", 84, -80);
+          addOffset("singUPmiss", 28, 67);
+         addOffset("singRIGHTmiss", -45, 50);
+        addOffset("singLEFTmiss", 83, 28);
+        addOffset("singDOWNmiss", 80, -38);
 
 				playAnim('idle');
 

@@ -5,19 +5,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.2.9] 2022-?-?
-### added 
-- Week 8 update bois
-- erect difficulty 
-- More Modding stuff
-### Fixed
-- character Loads html5 fix
+
+### Added 
+- New week  3 songs made by KAWAISPRITE darnell lit-up and 2hot 
+- YOU CAN KNOW PLAY IT ON DESKTOP NOW 
+- NEW DIFFICULTY 
+- SOUND PITCHER FOR CHART EDITOR
+### Changed
+- CUTSCENCE FORMATTER
 
 ## [0.2.8] - 2021-04-18
 ### Added
-- Week 7 Update 
-- options menu
+- TANKMAN! 3 NEW SONGS BY KAWAISPRITE (UGH, GUNS, STRESS)! Charting help by MtH!
+- Monster added into week 2, FINALLY (Charting help by MtH and ChaoticGamer!)
+- Can now change song difficulty mid-game.
+- Shows some song info on pause screen.
+- Cute little icons onto freeplay menu
+### Changed
+- ASSET LOADING OVERHAUL, WAY FASTER LOAD TIMES ON WEB!!! (THANKS TO GEOKURELI WOKE KING)
+- Made difficulty selector on freeplay menu more apparent
 ### Fixed
-- freeplay fix 
 - That one random note on Bopeebo
 
 ## [0.2.7.1] - 2021-02-14
