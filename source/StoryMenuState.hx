@@ -30,8 +30,8 @@ class StoryMenuState extends MusicBeatState
 		['Satin-Panties', "High", "Milf"],
 		['Cocoa', 'Eggnog', 'Winter-Horrorland'],
 		['Senpai', 'Roses', 'Thorns'],
-		['Ugh', 'Guns', 'Stress'],
-		['darnell','lit-up', '2hot']
+		['ugh', 'guns', 'stress'],
+		['darnell','lit-up', 'hot']
 	];
 	var curDifficulty:Int = 1;
 
@@ -75,7 +75,7 @@ class StoryMenuState extends MusicBeatState
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music('Week8theme'));
 		}
 
 		persistentUpdate = persistentDraw = true;

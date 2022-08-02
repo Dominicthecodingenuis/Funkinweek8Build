@@ -50,7 +50,7 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.sound.music != null)
 			{
 				if (!FlxG.sound.music.playing)
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FlxG.sound.playMusic(Paths.music('Week8theme'));
 			}
 		 */
 
@@ -61,7 +61,7 @@ class FreeplayState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music('Week8theme'));
 		}
 
 		if (StoryMenuState.weekUnlocked[2])
@@ -83,10 +83,10 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
 
 		if (StoryMenuState.weekUnlocked[7])
-			addWeek(['Ugh', 'Guns', 'Stress'], 7, ['tankman']);
+			addWeek(['ugh', 'guns', 'stress'], 7, ['tankman']);
 
         if (StoryMenuState.weekUnlocked[8])
-			addWeek(['darnell', 'lit-up', '2hot'], 8, ['darnell']);
+			addWeek(['darnell', 'lit-up', 'hot'], 8, ['darnell']);
 
 		// LOAD MUSIC
 

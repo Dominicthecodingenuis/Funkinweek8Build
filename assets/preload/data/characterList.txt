@@ -20,3 +20,5 @@ darnell
 nene
 gfTankmen
 pico-player
+bf-holding-gf
+pico-speaker

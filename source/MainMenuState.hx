@@ -50,7 +50,7 @@ class MainMenuState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music('Week8theme'));
 		}
 
 		persistentUpdate = persistentDraw = true;

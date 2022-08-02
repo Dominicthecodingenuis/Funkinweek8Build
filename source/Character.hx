@@ -591,6 +591,54 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+
+				case 'bf-holding-gf':
+				tex = Paths.getSparrowAtlas('Characters/bfAndGF');
+				frames = tex;
+		animation.addByPrefix("idle","BF idle dance");
+		animation.addByPrefix("singDOWN","BF NOTE DOWN0");
+		animation.addByPrefix("singLEFT","BF NOTE LEFT0");
+		animation.addByPrefix("singRIGHT","BF NOTE RIGHT0");
+		animation.addByPrefix("singUP","BF NOTE UP0");
+		animation.addByPrefix("singDOWNmiss","BF NOTE DOWN MISS");
+		animation.addByPrefix("singLEFTmiss","BF NOTE LEFT MISS");
+		animation.addByPrefix("singRIGHTmiss","BF NOTE RIGHT MISS");
+		animation.addByPrefix("singUPmiss","BF NOTE UP MISS");
+		animation.addByPrefix("bfCatch","BF catches GF");
+
+addOffset("idle", 0, 0);
+addOffset("singUP", -29, 10);
+addOffset("singRIGHT", -41, 23);
+addOffset("singLEFT", 12, 7);
+addOffset("singDOWN", -10, -10);
+addOffset("singUPmiss", -29, 10);
+addOffset("singRIGHTmiss", -41, 23);
+addOffset("singLEFTmiss", 12, 7);
+addOffset("singDOWNmiss", -10, -10);
+addOffset("bfCatch", 0, 0);
+
+playAnim('idle');
+
+flipX = true;
+
+
+ 
+case 'pico-speaker':
+	frames = Paths.getSparrowAtlas('characters/picoSpeaker');
+	animation.addByPrefix('shoot1', 'Pico shoot 1');
+	animation.addByPrefix('shoot2', 'Pico shoot 2');
+	animation.addByPrefix('shoot3', 'Pico shoot 3');
+	animation.addByPrefix('shoot4', 'Pico shoot 4');
+
+
+	addOffset("shoot1", 0, 0);
+    addOffset("shoot2", -1 -128);	
+	addOffset("shoot3", 412, -64);
+	addOffset("shoot4", 439, -19);
+	
+
+	playAnim('shoot1');
+
 			
 
 

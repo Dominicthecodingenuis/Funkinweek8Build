@@ -676,6 +676,7 @@ class PlayState extends MusicBeatState
 				gfVersion = 'nene';
 		}
 
+
 		if (curStage == 'limo')
 			gfVersion = 'gf-car';
 
@@ -763,12 +764,13 @@ class PlayState extends MusicBeatState
 				gf.x += 180;
 				gf.y += 300;
 		    case 'tank':
-				  gf.y += 10;
-			gf.x -= 30;
-				  boyfriend.x += 40;
-			boyfriend.y += 0;
-				   dad.y += 60;
+				gf.y += 10;
+			    gf.x -= 30;
+			    boyfriend.x += 40;
+			    boyfriend.y += 0;
+				dad.y += 60;
 				dad.x -= 80;
+	
 			case 'darnell':
 				dad.y += 645;
 				dad.x -= 50;
@@ -1888,7 +1890,7 @@ class PlayState extends MusicBeatState
 
 			if (storyPlaylist.length <= 0)
 			{
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music('Week8theme'));
 
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
