@@ -11,6 +11,7 @@ class GameOverSubstate extends MusicBeatSubstate
 {
 	var bf:Boyfriend;
 	var camFollow:FlxObject;
+	var curWeek:Int = 0;
 
 	var stageSuffix:String = "";
 
@@ -75,10 +76,16 @@ class GameOverSubstate extends MusicBeatSubstate
 			FlxG.camera.follow(camFollow, LOCKON, 0.01);
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
-		{
+		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished) {
 			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
 		}
+		else if (curWeek == 8) {
+			FlxG.sound.playMusic(Paths.music('picoGameover' + stageSuffix));
+		}
+
+	
+		
+
 
 		if (FlxG.sound.music.playing)
 		{

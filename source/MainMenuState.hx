@@ -109,7 +109,7 @@ class MainMenuState extends MusicBeatState
 		}
 		menuItems.createItem(0, 0, "options", function()
 		{
-			throw "Expected Expression at character 16 ";
+			startExitState(new OptionsState());
 		});
 
 		var pos:Float = (FlxG.height - 160 * (menuItems.length - 1)) / 2;
