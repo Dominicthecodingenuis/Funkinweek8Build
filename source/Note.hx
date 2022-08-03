@@ -79,6 +79,7 @@ class Note extends FlxSprite
 					animation.add('bluehold', [1]);
 				}
 
+				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
 
 			default:

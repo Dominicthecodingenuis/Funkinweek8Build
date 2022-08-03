@@ -16,9 +16,8 @@ senpai
 senpai-angry
 spirit
 tankman
-darnell
-nene
-gfTankmen
-pico-player
-bf-holding-gf
 pico-speaker
+bf-holding-gf
+darnell
+pico-player
+nene

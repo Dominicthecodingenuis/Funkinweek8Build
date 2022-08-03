@@ -572,7 +572,7 @@ class PlayState extends MusicBeatState
 		                            add(waveSpriteFG);
 		                    */
 		          }
-				  case 'ugh' | 'guns' | 'stress':
+				  case 'guns' | 'stress' | 'ugh':
 				  {
 						defaultCamZoom = 0.9;
 
@@ -675,9 +675,6 @@ class PlayState extends MusicBeatState
 								bg.scrollFactor.set(0.9, 0.9);
 								bg.active = false;
 								add(bg);
-
-
-
 		          }
               }
 
@@ -816,6 +813,13 @@ class PlayState extends MusicBeatState
 					gf.x -= 170;
 					gf.y -= 75;
 				}
+				case 'darnell':
+				dad.y += 859;
+				dad.x -= 50;
+				gf.x -= 25;
+                gf.y += 360;
+				boyfriend.y += 310;
+				boyfriend.x -= 70;
 		}
 
 		add(gf);
