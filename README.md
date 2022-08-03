@@ -2,7 +2,7 @@
 
 This is the repository for Friday Night Funkin, a game originally made for Ludum Dare 47 "Stuck In a Loop".
 
-Play the Newgrounds one here: http://uploads.ungrounded.net/alternate/1920000/1920279_alternate_189725_r1.zip/
+Play the html5 here:
 
 IF YOU MAKE A MOD AND DISTRIBUTE A MODIFIED / RECOMPILED VERSION, YOU MUST OPEN SOURCE YOUR MOD AS WELL
 
